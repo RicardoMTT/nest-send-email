@@ -6,6 +6,10 @@ import { MessageDto } from './dto/message.dto';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+  @Get('hola')
+  hello() {
+    return 'Hello world';
+  }
   @Get()
   sendEmail(@Body() messageDto: MessageDto) {
     return this.appService.sendMail(messageDto);
