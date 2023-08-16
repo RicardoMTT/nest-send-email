@@ -8,7 +8,18 @@ export class AppController {
 
 
   @Post()
-  sendEmail(@Body() messageDto: MessageDto) {
-    return this.appService.sendMail(messageDto);
+  async sendEmail(@Body() messageDto: MessageDto) {
+    try {
+      const result =  await this.appService.sendMail(messageDto);
+      return {
+        success:true,
+        message:result.msg
+      }
+    } catch (error) {
+      return {
+        success:false,
+        message:'Error en el servidor'
+      }
+    }
   }
 }

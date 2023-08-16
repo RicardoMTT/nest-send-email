@@ -8,8 +8,9 @@ export class AppService {
 
 
 
-  sendMail(messageDto: MessageDto): void {
-    this.mailerService
+  async sendMail(messageDto: MessageDto) {
+    try {
+      await this.mailerService
       .sendMail({
         to: messageDto.to,
         from: messageDto.from,
@@ -17,11 +18,8 @@ export class AppService {
         text: messageDto.text,
         html: `<b>Has recibido un mensaje de  ${messageDto.from}</b>`,
       })
-      .catch((err) => {
-        console.log('err', err);
-      });
 
-      this.mailerService
+      await this.mailerService
       .sendMail({
         to: messageDto.from,
         from: messageDto.to,
@@ -29,8 +27,12 @@ export class AppService {
         text: messageDto.text,
         html: `<b>Has enviado un mensaje a  ${messageDto.to}</b>`,
       })
-      .catch((err) => {
-        console.log('err', err);
-      });
+      return {
+        msg:"Correo enviado satisfactoriamente"
+      }
+    } catch (error) {
+      console.log('Error al enviar el correo:', error);
+      throw new Error('Error al enviar el correo');
+    }
   }
 }
