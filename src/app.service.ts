@@ -16,17 +16,14 @@ export class AppService {
         from: messageDto.from,
         subject: messageDto.subject,
         text: messageDto.text,
-        html: `<b>Has recibido un mensaje de  ${messageDto.from}</b>`,
+        template:"./confirmation.hbs",
+        context:{
+          name:messageDto.name,
+          url:'https://www.google.com/'
+        }
       })
 
-      await this.mailerService
-      .sendMail({
-        to: messageDto.from,
-        from: messageDto.to,
-        subject: messageDto.subject,
-        text: messageDto.text,
-        html: `<b>Has enviado un mensaje a  ${messageDto.to}</b>`,
-      })
+     
       return {
         msg:"Correo enviado satisfactoriamente"
       }

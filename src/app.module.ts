@@ -3,8 +3,8 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-
-
+import { join } from 'path';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -23,6 +23,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         },
         defaults: {
           from: '"No Reply" <no-reply@gmail.com>',
+        },
+        template: {
+          dir: join(__dirname, '/mail/templates'),
+          adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
+          options: {
+            strict: true,
+          },
         },
         preview: false,
       }),

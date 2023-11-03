@@ -3,4 +3,5 @@ export class MessageDto {
   to: string;
   subject: string;
   text: string;
+  name?: string;
 }
